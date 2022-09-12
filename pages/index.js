@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
 import {Categories, PostCard, PostWidget} from "../components";
+import {getPost} from "../services";
 
 const posts = [
   {title:"Mern Stack Praktikum", excerpt:"Mongo DB, Express JS, React, NodeJS"},
   {title:"Digital marketing", excerpt: "ADS, Telegram, Telegram"}
 ]
-export default function Home() {
+export default function Home({posts}) {
   return (
     <div className="container mx-auto px-10 mb-8">
       <Head>
@@ -15,18 +16,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="lg:col-span-4 col-span-1">
+          <div className="lg:sticky relative top-8">
+            <div className="lg:sticky relative top-8">
+              <PostWidget/>
+              <Categories/>
+            </div>
+          </div>
+        </div>
         <div className="lg:col-span-8 col-span-1 ">
           {posts.map((post,index)=>(
-            <PostCard post={post} key={index}/>
+            <PostCard post={post.node} key={index}/>
           ))}
         </div>
-      </div>
-      <div className="lg:col-span-4 col-span-1">
-        <div className="lg:sticky relative top-8">
-          <PostWidget/>
-          <Categories/>
-        </div>
+
       </div>
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const posts = (await getPost()) || []
+  return {
+    props: {posts}
+  }
 }
