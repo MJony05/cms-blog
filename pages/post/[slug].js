@@ -1,5 +1,5 @@
 import React from "react";
-import { Categories, PostWidget } from "../../components";
+import { Categories, PostDetail, PostWidget } from "../../components";
 
 const PostDetails = () => {
   return (
@@ -12,8 +12,8 @@ const PostDetails = () => {
           </div>
         </div>
         <div className="col-span-1 lg:col-span-8">
-          <PostDetails />
-          <Autor />
+          <PostDetail />
+          <Author />
           <CommentsForm />
           <Comments />
         </div>
